@@ -9,11 +9,10 @@ fn heapify(array: []u32) void {
         i -= 1;
         var parent = i;
         while (2 * parent + 1 < array.len) {
-            const left = 2 * parent + 1;
-            const right = if (left + 1 < array.len) left + 1 else left;
             var max: usize = parent;
-            max = if (array[max] > array[left]) max else left;
-            max = if (array[max] > array[right]) max else right;
+            const left = 2 * parent + 1;
+            for (left..@min(left + 2, array.len)) |child|
+                max = if (array[max] > array[child]) max else child;
             if (max == parent) break;
             swap(&array[max], &array[parent]);
             parent = max;
